@@ -51,10 +51,12 @@ class _WebViewPageState extends ConsumerState<WebViewPage> {
           },
           onPageFinished: (String url) {
             ref.read(webViewUseCaseProvider.notifier).changeUrl(url);
-            if ((url.startsWith("https://bella-vita-shop.com/") ||
+            if ((url.startsWith("https://watashigayarimashita.vercel.app/") ||
                     (url.startsWith("https://shopify.com/70293192937/"))) &&
-                !url.startsWith("https://bella-vita-shop.com/checkouts/") &&
-                !url.startsWith("https://bella-vita-shop.com/70293192937/") &&
+                !url.startsWith(
+                    "https://watashigayarimashita.vercel.app/checkouts/") &&
+                !url.startsWith(
+                    "https://watashigayarimashita.vercel.app/70293192937/") &&
                 !url.startsWith(
                     "https://shopify.com/authentication/70293192937/") &&
                 !url.startsWith("https://shop.app/checkout/70293192937/")) {
@@ -80,7 +82,7 @@ class _WebViewPageState extends ConsumerState<WebViewPage> {
           );
         },
       )
-      ..loadRequest(Uri.parse('https://bella-vita-shop.com/'));
+      ..loadRequest(Uri.parse('https://watashigayarimashita.vercel.app/'));
 
     // if (kIsWeb || !Platform.isMacOS) {
     //   controller.setBackgroundColor(const Color(0x80000000));
@@ -110,11 +112,14 @@ class _WebViewPageState extends ConsumerState<WebViewPage> {
       _selectedIndex = index;
     });
     if (index == 0) {
-      _controller.loadRequest(Uri.parse('https://bella-vita-shop.com/'));
+      _controller
+          .loadRequest(Uri.parse('https://watashigayarimashita.vercel.app/'));
     } else if (index == 1) {
-      _controller.loadRequest(Uri.parse('https://bella-vita-shop.com/cart'));
+      _controller.loadRequest(
+          Uri.parse('https://watashigayarimashita.vercel.app/cart'));
     } else if (index == 2) {
-      _controller.loadRequest(Uri.parse('https://bella-vita-shop.com/account'));
+      _controller.loadRequest(
+          Uri.parse('https://watashigayarimashita.vercel.app/account'));
     }
   }
 
@@ -124,7 +129,7 @@ class _WebViewPageState extends ConsumerState<WebViewPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFC08B7B),
+        backgroundColor: const Color(0xFFFFFFFF),
         elevation: 0,
         foregroundColor: Colors.white,
         toolbarHeight: 5,
@@ -161,7 +166,7 @@ class _WebViewPageState extends ConsumerState<WebViewPage> {
       //     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'アカウント'),
       //   ],
       //   type: BottomNavigationBarType.fixed,
-      //   backgroundColor: Color(0xFFC08B7B), // バーの背景色
+      //   backgroundColor: Color(0xFF06C9B3), // バーの背景色
       //   selectedItemColor: Color(0xFFFFFFFF), // 選択されたアイテムの色
       //   unselectedItemColor:
       //       Color.fromARGB(255, 210, 193, 189), //  // 選択されていないアイテムの色

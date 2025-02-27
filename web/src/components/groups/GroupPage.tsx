@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Users, MessageSquarePlus, Trash2 } from 'lucide-react';
+import { Plus, Users, MessageSquarePlus, Trash2, ClipboardCopy } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { CreateRuleModal } from './CreateRuleModal';
 import { CreatePostModal } from '../posts/CreatePostModal';
@@ -62,6 +62,7 @@ export function GroupPage({ groupId, groupName, onBack }: GroupPageProps) {
   const [isOwner, setIsOwner] = useState(false);
   const [deletingMemberId, setDeletingMemberId] = useState<string | null>(null);
   const [deletingRuleId, setDeletingRuleId] = useState<string | null>(null);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     getCurrentUser();
@@ -177,6 +178,12 @@ export function GroupPage({ groupId, groupName, onBack }: GroupPageProps) {
     setLoading(false);
   }
 
+  async function copyGroupId() {
+    await navigator.clipboard.writeText(groupId);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  }
+
   async function handleDeleteMember(memberId: string) {
     if (!isOwner || memberId === currentUserId) return;
 
@@ -237,6 +244,28 @@ export function GroupPage({ groupId, groupName, onBack }: GroupPageProps) {
         </button>
         <h2 className="text-xl font-bold">{groupName}</h2>
       </div>
+      <div className="flex items-center gap-4 mb-2 relative">
+        <h2 className="text-gray-400 text-sm hover:text-gray-800 cursor-pointer">
+          {groupId}
+        </h2>
+        <div className="flex items-center gap-2 relative">
+          {isCopied && (
+            <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-green-500 px-2 py-1 whitespace-nowrap">
+              コピーしました
+            </span>
+          )}
+          <button
+            onClick={copyGroupId}
+            className="p-2 text-gray-500 hover:bg-gray-50 rounded-full transition-colors"
+            title="グループ ID をコピー"
+          >
+            <ClipboardCopy className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+
+
 
       <div className="flex border-b mb-6">
         <button

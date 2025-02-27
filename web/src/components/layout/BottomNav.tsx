@@ -11,7 +11,7 @@ interface BottomNavProps {
 export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   return (
     <nav className="bg-white fixed bottom-0 w-full border-t">
-      <div className="max-w-md mx-auto px-4">
+      <div className="max-w-md mx-auto px-4 pb-6">
         <div className="flex justify-around">
           <NavButton
             icon={<Home className="w-6 h-6" />}

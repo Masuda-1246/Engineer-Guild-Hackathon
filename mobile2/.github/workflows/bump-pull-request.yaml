@@ -1,0 +1,77 @@
+name: bump pull request
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        type: choice
+        description: Please choose the bump target
+        options:
+          - build
+          - patch
+          - minor
+          - major
+
+env:
+  GIT_USER_EMAIL: "41898282+version管理くんからの通知です@users.noreply.github.com"
+  GIT_USER_NAME: "version管理くん"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Display Flutter version
+        run: flutter --version
+
+      - name: Run flutter pub get
+        run: flutter pub get
+
+      - name: Initialize Git configuration
+        run: |
+          git config --local user.name ${{ env.GIT_USER_NAME }}
+          git config --local user.email ${{ env.GIT_USER_EMAIL }}
+
+      - name: Bump version
+        run: |
+          echo "Choice: ${{ github.event.inputs.bump }}"
+          flutter pub run cider bump ${{ github.event.inputs.bump }} --bump-build
+          echo "BUMP_VERSION=$(flutter pub run cider version)" >> $GITHUB_ENV
+
+      - name: Commit changes
+        run: |
+          git add pubspec.yaml
+          echo "Bumped version number to ${{ env.BUMP_VERSION }}" | git commit --file=-
+
+      - name: Create release branch
+        run: |
+          git checkout -b releases/${{ env.BUMP_VERSION }}
+          echo "RELEASE_BRANCH=releases/${{ env.BUMP_VERSION }}" >> $GITHUB_ENV
+
+      - name: Fetch and Rebase
+        run: |
+          git fetch origin main
+          git rebase origin/main
+
+      - name: Push the branch
+        run: |
+          git push -u origin ${{ env.RELEASE_BRANCH }}
+
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create -B main -t "Release ${{ env.BUMP_VERSION }}" -b "リリースおめでと!${{ github.event.inputs.bump }}のリリースです。バージョンは${{ env.BUMP_VERSION }}です。" --head ${{ env.RELEASE_BRANCH }}

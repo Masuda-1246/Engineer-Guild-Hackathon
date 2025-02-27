@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package proto.boxkey.v1;
+
+// Defines the Todo service
+service BoxKeyService {
+    rpc InitCreate (InitCreateRequest) returns (InitCreateResponse);
+}
+
+enum Status {
+    SUCCESS = 0;  // 成功
+    FAILURE = 1;  // 失敗
+}
+
+
+message InitCreateRequest {
+    string keyId = 1;
+    string boxId = 2;
+    string boxName = 3;
+    string keyName = 4;
+}
+
+message InitCreateResponse {
+    Status status = 1;
+}
+
+

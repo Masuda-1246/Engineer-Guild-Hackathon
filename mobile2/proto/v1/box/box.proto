@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package proto.box.v1;
+
+// Defines the Todo service
+service BoxService {
+    rpc isLock (isLockRequest) returns (isLockResponse);
+    rpc lock (lockRequest) returns (lockResponse);
+    rpc unlock (unlockRequest) returns (unlockResponse);
+}
+
+enum Status {
+    SUCCESS = 0;  // 成功
+    FAILURE = 1;  // 失敗
+}
+
+message isLockRequest {
+}
+
+message isLockResponse {
+    bool isLock = 1;
+    string name = 2;
+}
+
+message lockRequest {
+}
+
+message lockResponse {
+    Status status = 1;
+}
+
+message unlockRequest {
+}
+
+message unlockResponse {
+    Status status = 1;
+}
+
+
+

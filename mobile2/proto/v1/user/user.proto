@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package proto.user.v1;
+
+// Defines the Todo service
+service UserService {
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+    rpc GetUser (GetUserRequest) returns (GetUserResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse);
+}
+
+enum Status {
+    SUCCESS = 0;  // 成功
+    FAILURE = 1;  // 失敗
+}
+
+
+message GetUserRequest {
+}
+
+message GetUserResponse {
+    string name = 1;
+    bool is_init = 2;
+}
+
+message CreateUserRequest {
+}
+
+message CreateUserResponse {
+    Status status = 1;
+}
+
+message UpdateUserRequest {
+    string name = 1;;
+}
+
+message UpdateUserResponse {
+    Status status = 1;
+}

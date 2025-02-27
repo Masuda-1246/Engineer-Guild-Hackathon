@@ -298,22 +298,19 @@ export function BillingPage() {
 
       // Fetch rewards (confessions made on user's posts)
       const { data: rewardsData, error: rewardsError } = await supabase
-        .from('confessions')
+        .from('posts')
         .select(`
           rule_id,
           rules (
             title,
             fine_amount
           ),
-          posts (
-            groups (
-              name
-            ),
-            user_id
+          group_id,
+          groups (
+            name
           ),
           created_at
         `)
-        .eq('posts.user_id', user.id)
         .gte('created_at', startDate.toISOString())
         .lte('created_at', endDate.toISOString())
         .order('created_at', { ascending: false });
@@ -352,9 +349,9 @@ export function BillingPage() {
       const rewardsMap = new Map<string, Reward>();
       
       rewardsData?.forEach(reward => {
-        if (!reward.rules || !reward.posts?.groups) return;
+        if (!reward.rules || !reward.groups) return;
 
-        const key = `${reward.rule_id}-${reward.posts.groups.name}`;
+        const key = `${reward.rule_id}-${reward.groups.name}`;
         const existing = rewardsMap.get(key);
 
         if (existing) {
@@ -363,7 +360,7 @@ export function BillingPage() {
         } else {
           rewardsMap.set(key, {
             rule_title: reward.rules.title,
-            group_name: reward.posts.groups.name,
+            group_name: reward.groups.name,
             count: 1,
             amount: reward.rules.fine_amount
           });

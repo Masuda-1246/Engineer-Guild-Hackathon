@@ -258,7 +258,7 @@ export function CreatePostPage() {
                   <div className="flex text-sm text-gray-600">
                     <label
                       htmlFor="image-upload"
-                      className="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary-600 focus-within:outline-none"
+                      className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary-600 focus-within:outline-none"
                     >
                       <span>画像をアップロード</span>
                       <input

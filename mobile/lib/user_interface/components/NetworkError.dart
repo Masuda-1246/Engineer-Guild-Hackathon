@@ -10,7 +10,7 @@ class NetworkError extends StatelessWidget {
     Key? key,
     required this.onReload,
     this.message = 'インターネット接続エラーが発生しました\nもう一度お試しください',
-    this.buttonColor = const Color(0xFFC08B7B),
+    this.buttonColor = const Color(0xFF06C9B3),
     this.textColor = Colors.white,
   }) : super(key: key);
 

@@ -10,7 +10,7 @@ class BackButtonContainer extends StatelessWidget {
   const BackButtonContainer({
     Key? key,
     required this.controller,
-    this.iconColor = const Color(0xFFC08B7B),
+    this.iconColor = const Color(0xFF06C9B3),
     this.iconSize = 30.0,
     required this.url,
   }) : super(key: key);
@@ -36,9 +36,9 @@ class BackButtonContainer extends StatelessWidget {
                           url.startsWith(
                               "https://shop.app/checkout/70293192937/") ||
                           url.startsWith(
-                              "https://bella-vita-shop.com/checkouts/")) {
-                        controller.loadRequest(
-                            Uri.parse("https://bella-vita-shop.com/"));
+                              "https://watashigayarimashita.vercel.app/checkouts/")) {
+                        controller.loadRequest(Uri.parse(
+                            "https://watashigayarimashita.vercel.app/"));
                       } else {
                         controller.goBack();
                       }
